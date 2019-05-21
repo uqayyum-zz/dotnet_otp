@@ -1,13 +1,57 @@
 ﻿using OtpNet;
 using System;
+using System.IO;
+using System.Threading;
 
 namespace OTP_Generator
 {
     class Program
     {
-        static void Main(string[] args)
+        private static ReaderWriterLockSlim _readWriteLock = new ReaderWriterLockSlim();
+
+        static int Main(string[] args)
         {
-            Console.WriteLine("Kick Off!");
+            int code = -1;
+            if (!(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "OTP_GeneratorLog.txt")))
+                System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "OTP_GeneratorLog.txt").Close();
+
+            if (args.Length < 1)
+            {
+                using (StreamWriter writer = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "OTP_GeneratorLog.txt", true))
+                {
+                    _readWriteLock.EnterWriteLock();
+                    writer.WriteLine("Invalid Arguments");
+                    foreach (string arg in args)
+                    {
+                        writer.WriteLine(arg);
+                    }
+                    _readWriteLock.ExitWriteLock();
+                }
+            }
+
+            string key = args[0];
+
+            try
+            {
+                code = generateOTP(key);
+                using (StreamWriter writer = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "OTP_GeneratorLog.txt", true))
+                {
+                    _readWriteLock.EnterWriteLock();
+                    writer.WriteLine(code);
+                    _readWriteLock.ExitWriteLock();
+                }
+            }
+            catch (Exception ex)
+            {
+                using (StreamWriter writer = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "OTP_GeneratorLog.txt", true))
+                {
+                    _readWriteLock.EnterWriteLock();
+                    writer.WriteLine("Major Log : ERROR while executiopn :  --   " + DateTime.Now.ToLongDateString() + "  --  " + ex.Message);
+                    _readWriteLock.ExitWriteLock();
+                }
+            }
+            Console.WriteLine(code);
+            return code;
         }
 
         //Helper Methods
