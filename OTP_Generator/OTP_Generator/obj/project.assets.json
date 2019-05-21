@@ -207,6 +207,18 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "Otp.NET/1.2.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Otp.NET.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Otp.NET.dll": {}
+        }
       }
     }
   },
@@ -680,11 +692,25 @@
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "Otp.NET/1.2.1": {
+      "sha512": "PfvDoAehitBqVSRi6HRJ6+byctNpNC8SmigTF+/2GFrVfzsbjLpwETJm6tGBrhfZ0yWbkLc23WfUorJfnTyfrQ==",
+      "type": "package",
+      "path": "otp.net/1.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Otp.NET.dll",
+        "lib/netstandard1.3/Otp.NET.dll",
+        "otp.net.1.2.1.nupkg.sha512",
+        "otp.net.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "Microsoft.NETCore.App >= 2.1.0"
+      "Microsoft.NETCore.App >= 2.1.0",
+      "Otp.NET >= 1.2.1"
     ]
   },
   "packageFolders": {
@@ -733,6 +759,10 @@
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
+          },
+          "Otp.NET": {
+            "target": "Package",
+            "version": "[1.2.1, )"
           }
         },
         "imports": [
