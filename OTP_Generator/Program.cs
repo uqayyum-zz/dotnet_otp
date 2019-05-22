@@ -12,12 +12,12 @@ namespace OTP_Generator
         static int Main(string[] args)
         {
             int code = -1;
-            if (!(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "OTP_GeneratorLog.txt")))
-                System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "OTP_GeneratorLog.txt").Close();
+            if (!(File.Exists(AppDomain.CurrentDomain.BaseDirectory + Resources.logFileName)))
+                System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + Resources.logFileName).Close();
 
             if (args.Length < 1)
             {
-                using (StreamWriter writer = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "OTP_GeneratorLog.txt", true))
+                using (StreamWriter writer = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + Resources.logFileName, true))
                 {
                     _readWriteLock.EnterWriteLock();
                     writer.WriteLine("Invalid Arguments");
@@ -34,7 +34,7 @@ namespace OTP_Generator
             try
             {
                 code = generateOTP(key);
-                using (StreamWriter writer = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "OTP_GeneratorLog.txt", true))
+                using (StreamWriter writer = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + Resources.logFileName, true))
                 {
                     _readWriteLock.EnterWriteLock();
                     writer.WriteLine(code);
