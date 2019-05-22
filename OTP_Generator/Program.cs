@@ -37,7 +37,7 @@ namespace OTP_Generator
                 using (StreamWriter writer = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + Resources.logFileName, true))
                 {
                     _readWriteLock.EnterWriteLock();
-                    writer.WriteLine(code);
+                    writer.WriteLine(code.ToString().PadLeft(6, '0'));
                     _readWriteLock.ExitWriteLock();
                 }
             }
